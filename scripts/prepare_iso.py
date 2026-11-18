@@ -41,7 +41,7 @@ def prepare(edition_name, archiso_root, destination):
             "Remove it manually if you intend to regenerate."
         )
 
-    shutil.copytree(source, destination)
+    shutil.copytree(source, destination, symlinks=True)
 
     edition = editions[edition_name]
     packages_file = destination / "packages.x86_64"
