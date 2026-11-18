@@ -1,8 +1,14 @@
+"""LIFE OS searchable application launcher."""
 
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QDialog, QLabel, QLineEdit, QListWidget,
-    QVBoxLayout,
+    QListWidgetItem, QVBoxLayout,
 )
+
+from lifeos.icons import icon_path
+from lifeos.ui.components.navigation import PAGES
 
 
 class AppLauncher(QDialog):
@@ -10,40 +16,72 @@ class AppLauncher(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle("LIFE Launcher")
-        self.resize(430, 410)
+        self.resize(460, 450)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(22, 22, 22, 22)
-        layout.setSpacing(12)
+        layout.setContentsMargins(25, 25, 25, 25)
+        layout.setSpacing(14)
 
-        title = QLabel("Applications")
+        title = QLabel("Find your flow.")
         title.setObjectName("pageTitle")
         layout.addWidget(title)
 
+        subtitle = QLabel(
+            "Everything you need, one search away."
+        )
+        subtitle.setObjectName("muted")
+        layout.addWidget(subtitle)
+
         self.search = QLineEdit()
-        self.search.setPlaceholderText("Find an app...")
+        self.search.setPlaceholderText(
+            "Search LIFE applications..."
+        )
         layout.addWidget(self.search)
 
         self.apps = QListWidget()
-        self.apps.addItems(["Overview", "Notes", "Files", "Settings"])
+        self.apps.setIconSize(QSize(24, 24))
+
+        theme = "light"
+        if parent is not None:
+            theme = getattr(parent, "active_theme", "light")
+
+        for name, icon_name in PAGES:
+            item = QListWidgetItem(name)
+            item.setIcon(
+                QIcon(str(icon_path(icon_name, theme)))
+            )
+            self.apps.addItem(item)
+
         layout.addWidget(self.apps)
 
-        self.search.textChanged.connect(self.filter_apps)
-        self.apps.itemActivated.connect(self.launch_app)
-        self.apps.itemClicked.connect(self.launch_app)
+        self.search.textChanged.connect(
+            self.filter_apps
+        )
+        self.apps.itemActivated.connect(
+            self.launch_app
+        )
+        self.apps.itemClicked.connect(
+            self.launch_app
+        )
+
+        self.search.setFocus()
 
     def filter_apps(self, text):
+        query = text.strip().lower()
+
         for index in range(self.apps.count()):
             item = self.apps.item(index)
-            item.setHidden(text.lower() not in item.text().lower())
+            item.setHidden(
+                query not in item.text().lower()
+            )
 
     def launch_app(self, item):
-        destination = {
-            "Overview": 0,
-            "Notes": 1,
-            "Files": 2,
-            "Settings": 3,
-        }[item.text()]
+        destinations = {
+            name: index
+            for index, (name, _) in enumerate(PAGES)
+        }
 
-        self.parent().navigate(destination)
+        self.parent().navigate(
+            destinations[item.text()]
+        )
         self.accept()

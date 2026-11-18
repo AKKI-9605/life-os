@@ -4,7 +4,7 @@ from PySide6.QtCore import QDir, Qt, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QFileSystemModel, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QTreeView, QVBoxLayout, QWidget,
+    QPushButton, QTreeView, QVBoxLayout, QWidget, QGridLayout,
 )
 
 
@@ -25,6 +25,34 @@ class FilesPage(QWidget):
         description = QLabel("Browse your Linux workspace.")
         description.setObjectName("muted")
         layout.addWidget(description)
+
+        shortcuts = QGridLayout()
+        shortcuts.setSpacing(8)
+
+        folders = [
+            ("Home", Path.home()),
+            ("Desktop", Path.home() / "Desktop"),
+            ("Documents", Path.home() / "Documents"),
+            ("Downloads", Path.home() / "Downloads"),
+            ("Pictures", Path.home() / "Pictures"),
+            ("Music", Path.home() / "Music"),
+            ("Videos", Path.home() / "Videos"),
+            ("Projects", Path.home() / "Projects"),
+        ]
+
+        for index, (label, folder) in enumerate(folders):
+            button = QPushButton(label)
+            button.setObjectName("quickFolder")
+            button.setMinimumHeight(37)
+            button.clicked.connect(
+                lambda checked=False, target=folder:
+                    self.go_to(target)
+            )
+            shortcuts.addWidget(
+                button, index // 4, index % 4
+            )
+
+        layout.addLayout(shortcuts)
 
         controls = QHBoxLayout()
 

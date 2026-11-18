@@ -179,6 +179,48 @@ def shell_stylesheet(app, theme):
         selection-background-color: %(selected)s;
         selection-color: %(selected_text)s;
     }
+
+    QFrame#heroCard {
+        background: %(surface)s;
+        border: 1px solid %(border)s;
+        border-radius: 17px;
+    }
+
+    QLabel#heroTitle {
+        font-size: 31px;
+        font-weight: 700;
+        color: %(text)s;
+    }
+
+    QPushButton#quickFolder {
+        background: %(surface)s;
+        border: 1px solid %(border)s;
+        border-radius: 10px;
+        padding: 8px 10px;
+        text-align: center;
+    }
+
+    QPushButton#quickFolder:hover {
+        background: %(selected)s;
+        border-color: %(accent)s;
+    }
+
+    QFrame#sidebar {
+        border-radius: 18px;
+    }
+
+    QFrame#toolbar {
+        border-radius: 13px;
+    }
+
+    QPushButton#navigationButton {
+        border-radius: 11px;
+    }
+
+    QStackedWidget {
+        border: none;
+    }
+
     """ % {
         **c,
         "hover": hover,

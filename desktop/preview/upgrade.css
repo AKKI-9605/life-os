@@ -1,0 +1,230 @@
+:root {
+  --surface:rgba(252,253,255,.91);
+  --surface2:rgba(238,244,248,.83);
+  --surface3:#ffffff;
+  --line:rgba(105,138,160,.20);
+  --hover:rgba(111,157,188,.14);
+  --primary:#5d87a7;
+}
+body[data-theme=dark] {
+  --surface:rgba(25,37,53,.96);
+  --surface2:rgba(39,55,74,.96);
+  --surface3:#30435a;
+  --line:rgba(170,198,221,.17);
+  --hover:rgba(141,184,221,.19);
+  --primary:#a3d0ee;
+}
+body[data-theme=dark] .desktop {
+  background:linear-gradient(160deg,#0c1728 0%,#1c344e 48%,#527088 100%);
+}
+body[data-theme=dark] .sun {
+  background:radial-gradient(circle,#c4d9f0 0%,#a3bbdb 15%,transparent 67%);
+  opacity:.45;
+}
+body[data-theme=dark] .mountain {
+  background:linear-gradient(160deg,#284b63,#162b43);
+}
+body[data-theme=dark] .mountain.two {
+  background:linear-gradient(150deg,#375b74,#203c58);
+}
+body[data-theme=dark] .mountain.three {
+  background:linear-gradient(160deg,#18394a,#10293d);
+}
+body[data-theme=dark] .desktop-title {color:#f1f6fc}
+body[data-theme=dark] .desktop-title p {color:#c5d7eb}
+body[data-theme=dark] .topbar {
+  background:rgba(16,28,43,.66);
+  border-color:var(--line);
+}
+body[data-theme=dark] .dock {
+  background:rgba(28,43,61,.84);
+  border-color:var(--line);
+}
+body[data-theme=dark] .dock button {
+  background:rgba(71,99,125,.45);
+  color:#e9f4ff;
+}
+body[data-theme=dark] .dock button:hover {
+  background:rgba(112,156,191,.55);
+}
+.window {
+  background:var(--surface)!important;
+  border:1px solid var(--line)!important;
+  box-shadow:0 25px 85px rgba(18,34,53,.26)!important;
+  min-width:310px;
+  min-height:220px;
+}
+.window-head {
+  background:var(--surface2);
+  border-color:var(--line)!important;
+  touch-action:none;
+}
+.window-content {background:var(--surface);padding:0!important}
+.window.maximized {
+  top:43px!important;
+  left:0!important;
+  width:100vw!important;
+  height:calc(100dvh - 43px)!important;
+  border-radius:0;
+}
+.launcher {
+  background:var(--surface)!important;
+  border-color:var(--line)!important;
+  color:var(--ink);
+}
+.toast {
+  background:var(--surface)!important;
+  color:var(--ink)!important;
+  border:1px solid var(--line)!important;
+  min-width:195px;
+  max-width:320px;
+  z-index:200!important;
+}
+.app-shell {display:flex;height:100%;min-height:0}
+.app-sidebar {
+  width:165px;
+  flex-shrink:0;
+  padding:15px 9px;
+  background:var(--surface2);
+  border-right:1px solid var(--line);
+  overflow:auto;
+}
+.app-sidebar button {
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  background:transparent;
+  border:0;
+  border-radius:10px;
+  padding:10px;
+  color:var(--ink);
+  font-size:12px;
+}
+.app-sidebar button:hover,.app-sidebar button.selected {
+  background:var(--hover);
+}
+.app-main {flex:1;min-width:0;overflow:auto;padding:22px}
+.app-main h2 {margin:0 0 7px;font-size:24px;letter-spacing:-.7px}
+.app-main p,.hint {color:var(--muted);font-size:12px;line-height:1.6}
+.folder-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:12px;margin:18px 0}
+.folder-tile {
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface2);
+  color:var(--ink);
+  padding:15px 8px;
+  text-align:center;
+  cursor:pointer;
+}
+.folder-tile:hover {background:var(--hover)}
+.folder-tile .symbol {display:block;font-size:29px;margin-bottom:9px}
+.folder-tile b {display:block;font-size:12px}
+.folder-tile small {display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.toolbar {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:12px 17px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+}
+.toolbar button,.tool-btn {
+  border:1px solid var(--line);
+  background:var(--surface2);
+  color:var(--ink);
+  padding:8px 12px;
+  border-radius:9px;
+  font-size:12px;
+}
+.toolbar .address {flex:1;background:var(--surface2);padding:9px 13px;border-radius:9px;font-size:12px}
+.file-row {
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 10px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.file-row span:first-child {font-size:21px}
+.file-row small {margin-left:auto;color:var(--muted);font-size:11px}
+.setting-group {
+  padding:20px;
+  border-bottom:1px solid var(--line);
+}
+.setting-group h3 {margin:0 0 11px;font-size:14px}
+.option-grid {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.choice {
+  border:1px solid var(--line);
+  background:var(--surface2);
+  color:var(--ink);
+  border-radius:11px;
+  padding:11px 14px;
+}
+.choice.active {
+  border-color:var(--primary);
+  background:var(--hover);
+}
+.app-input {
+  width:100%;
+  background:var(--surface2);
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:12px;
+  color:var(--ink);
+  outline:none;
+}
+.app-textarea {
+  min-height:170px;
+  resize:vertical;
+  line-height:1.65;
+}
+.calc {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  max-width:310px;
+  margin:auto;
+}
+.calc button {
+  padding:15px 5px;
+  background:var(--surface2);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.calc-display {
+  grid-column:span 4;
+  padding:18px;
+  text-align:right;
+  background:var(--surface2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  font-size:30px;
+  overflow:hidden;
+}
+.calendar-grid {display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:15px}
+.calendar-grid div {padding:10px 3px;text-align:center;border-radius:9px;font-size:12px}
+.calendar-grid .today {background:var(--hover);outline:1px solid var(--primary)}
+.terminal {
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12px;
+  background:#111d2b;
+  color:#b7e1d2;
+  padding:18px;
+  border-radius:13px;
+  min-height:220px;
+  white-space:pre-wrap;
+}
+.music-track {display:flex;align-items:center;gap:14px;padding:13px;border-bottom:1px solid var(--line)}
+.music-cover {width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#b7d2e4,#d9c3cb);display:grid;place-items:center;font-size:23px}
+.music-track small {display:block;color:var(--muted);margin-top:4px}
+.statbar {height:10px;background:var(--surface2);border-radius:10px;overflow:hidden;margin-top:9px}
+.statbar div {height:100%;background:linear-gradient(90deg,#89b9c6,#7d9dcd);border-radius:10px}
+.app-launch-icon {font-size:24px}
+@media(max-width:600px){
+  .app-sidebar{width:118px}
+  .app-main{padding:14px}
+  .window:not(.maximized){min-width:270px}
+}

@@ -30,3 +30,11 @@ dist/
 
 # Local editor backups
 *.py.bak
+
+# LIFE OS development packages
+LIFE_OS_Milestone_*.zip
+lifeos-m[0-9]*/
+
+# LIFE OS development packages
+LIFE_OS_Milestone_*.zip
+lifeos-m[0-9]*/
