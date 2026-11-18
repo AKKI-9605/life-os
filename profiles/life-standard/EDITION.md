@@ -1,0 +1,1 @@
+# life-standard\n\n- Base: Arch Linux x86-64\n- Desktop: KDE Plasma\n- Memory: 4 GB RAM target\n- Purpose: Full hybrid desktop for everyday computing.\n\nStatus: planned. Hardware requirements are not yet validated.\n

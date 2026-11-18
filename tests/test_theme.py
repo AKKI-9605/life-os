@@ -15,7 +15,7 @@ def test_light_theme():
     apply_theme(app, "light")
 
     color = app.palette().color(QPalette.ColorRole.Window)
-    assert color.name() == "#f5f6fa"
+    assert color.name() == "#f5f3ef"
 
 
 def test_dark_theme():
@@ -23,7 +23,7 @@ def test_dark_theme():
     apply_theme(app, "dark")
 
     color = app.palette().color(QPalette.ColorRole.Window)
-    assert color.name() == "#171a22"
+    assert color.name() == "#202630"
 
 
 def test_invalid_theme():

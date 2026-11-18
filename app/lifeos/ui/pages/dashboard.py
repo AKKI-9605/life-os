@@ -43,7 +43,8 @@ class DashboardPage(QWidget):
         layout.addWidget(recent_title)
 
         self.recent_list = QListWidget()
-        self.recent_list.setMaximumHeight(280)
+        self.recent_list.setMaximumHeight(300)
+        self.recent_list.setSpacing(5)
         self.recent_list.itemClicked.connect(self.open_recent)
         layout.addWidget(self.recent_list)
 

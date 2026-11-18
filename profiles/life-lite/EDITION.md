@@ -1,0 +1,1 @@
+# life-lite\n\n- Base: Arch Linux x86-64\n- Desktop: XFCE\n- Memory: 2 GB RAM target\n- Purpose: Lightweight desktop for older x86-64 PCs.\n\nStatus: planned. Hardware requirements are not yet validated.\n

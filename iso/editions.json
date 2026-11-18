@@ -1,0 +1,40 @@
+{
+  "life-lite": {
+    "desktop": "XFCE",
+    "display_manager": "lightdm",
+    "packages": [
+      "xfce4",
+      "xfce4-goodies",
+      "lightdm",
+      "lightdm-gtk-greeter",
+      "networkmanager",
+      "network-manager-applet",
+      "thunar",
+      "firefox",
+      "pipewire",
+      "pipewire-pulse",
+      "wireplumber",
+      "pavucontrol"
+    ]
+  },
+  "life-standard": {
+    "desktop": "KDE Plasma",
+    "display_manager": "sddm",
+    "packages": [
+      "plasma-meta",
+      "sddm",
+      "konsole",
+      "dolphin",
+      "ark",
+      "kate",
+      "discover",
+      "packagekit-qt6",
+      "networkmanager",
+      "firefox",
+      "pipewire",
+      "pipewire-pulse",
+      "wireplumber",
+      "pavucontrol"
+    ]
+  }
+}
