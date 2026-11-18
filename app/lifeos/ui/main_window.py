@@ -34,13 +34,15 @@ class LifeOSWindow(QMainWindow):
         self.sidebar = NavigationSidebar()
 
         self.pages = QStackedWidget()
-        self.dashboard = DashboardPage()
         self.notes = NotesPage()
+        self.dashboard = DashboardPage(self.notes.db)
 
         self.pages.addWidget(self.dashboard)
         self.pages.addWidget(self.notes)
 
-        self.sidebar.page_selected.connect(self.pages.setCurrentIndex)
+        self.sidebar.page_selected.connect(self.navigate)
+        self.dashboard.note_selected.connect(self.open_dashboard_note)
+        self.dashboard.notes_requested.connect(lambda: self.navigate(1))
 
         layout.addWidget(self.sidebar)
         layout.addWidget(self.pages, 1)
@@ -119,6 +121,15 @@ class LifeOSWindow(QMainWindow):
                 color: palette(highlighted-text);
             }
         """)
+
+    def navigate(self, index: int):
+        self.pages.setCurrentIndex(index)
+        if index == 0:
+            self.dashboard.refresh()
+
+    def open_dashboard_note(self, note_id: int):
+        self.navigate(1)
+        self.notes.open_note(note_id)
 
     def closeEvent(self, event):
         self.notes.db.close()

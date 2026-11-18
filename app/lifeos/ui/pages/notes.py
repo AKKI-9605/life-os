@@ -99,6 +99,9 @@ class NotesPage(QWidget):
         self.title_input.setText(note["title"])
         self.body_input.setPlainText(note["body"])
 
+    def open_note(self, note_id: int):
+        self.refresh_notes(select_id=note_id)
+
     def new_note(self):
         self.current_note_id = None
         self.note_list.clearSelection()
