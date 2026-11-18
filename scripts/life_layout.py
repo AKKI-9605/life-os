@@ -18,6 +18,7 @@ from layouts.engine import (
     save_preference,
 )
 from layouts.render import render
+from layouts.backup import backup_layout
 
 
 def main():
@@ -27,7 +28,7 @@ def main():
 
     parser.add_argument(
         "command",
-        choices=["list", "preview", "generate", "select", "current"],
+        choices=["list", "preview", "generate", "select", "current", "backup"],
     )
 
     parser.add_argument(
@@ -53,6 +54,12 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if args.command == "backup":
+        path = backup_layout(args.home, args.edition)
+        print(f"Desktop backup created: {path}")
+        print("No desktop configuration was changed.")
+        return
 
     if args.command == "list":
         print(json.dumps(LAYOUTS, indent=2))

@@ -44,6 +44,38 @@ def prepare(edition_name, archiso_root, destination):
     shutil.copytree(source, destination, symlinks=True)
 
     edition = editions[edition_name]
+    # Ship LIFE Layout with the live operating system.
+    # No desktop configuration is automatically applied.
+    life_root = destination / "airootfs/usr/share/lifeos"
+    life_root.mkdir(parents=True, exist_ok=True)
+
+    shutil.copytree(
+        ROOT / "desktop",
+        life_root / "desktop",
+        symlinks=True,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
+
+    scripts_dir = life_root / "scripts"
+    scripts_dir.mkdir(parents=True, exist_ok=True)
+
+    shutil.copy2(
+        ROOT / "scripts/life_layout.py",
+        scripts_dir / "life_layout.py",
+    )
+
+    bin_dir = destination / "airootfs/usr/bin"
+    bin_dir.mkdir(parents=True, exist_ok=True)
+
+    launcher = bin_dir / "life-layout"
+    launcher.write_text(
+        "#!/bin/sh\\n"
+        "exec /usr/bin/python "
+        "/usr/share/lifeos/scripts/life_layout.py "
+        "\\\"$@\\\"\\n"
+    )
+    launcher.chmod(0o755)
+
     packages_file = destination / "packages.x86_64"
 
     existing = packages_file.read_text().splitlines()

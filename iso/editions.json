@@ -14,7 +14,8 @@
       "pipewire",
       "pipewire-pulse",
       "wireplumber",
-      "pavucontrol"
+      "pavucontrol",
+      "python"
     ]
   },
   "life-standard": {
@@ -34,7 +35,8 @@
       "pipewire",
       "pipewire-pulse",
       "wireplumber",
-      "pavucontrol"
+      "pavucontrol",
+      "python"
     ]
   }
 }
