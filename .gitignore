@@ -22,3 +22,8 @@ htmlcov/
 # Temporary files
 *.log
 *.tmp
+
+# Python packaging
+*.egg-info/
+build/
+dist/
