@@ -27,3 +27,6 @@ htmlcov/
 *.egg-info/
 build/
 dist/
+
+# Local editor backups
+*.py.bak
