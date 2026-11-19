@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=LIFE Lite
+Comment=LIFE OS XFCE desktop session
+Exec=startxfce4
+TryExec=startxfce4
+Type=Application
+DesktopNames=XFCE

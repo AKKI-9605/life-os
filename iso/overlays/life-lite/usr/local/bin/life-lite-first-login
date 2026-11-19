@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -eu
+
+# LIFE Lite — initial XFCE appearance setup
+MARKER="$HOME/.config/lifeos/lite-first-login-v1"
+WALL="/usr/share/backgrounds/lifeos/life-horizon.svg"
+
+[ -f "$MARKER" ] && exit 0
+[ -f "$WALL" ] || exit 0
+
+command -v xfconf-query >/dev/null 2>&1 || exit 0
+
+# Wait for XFCE to initialize the desktop channel.
+PROPERTIES=""
+
+for attempt in 1 2 3 4 5 6 7 8 9 10; do
+    PROPERTIES="$(
+        xfconf-query -c xfce4-desktop -lv 2>/dev/null |
+        awk '$1 ~ /\/last-image$/ {print $1}'
+    )"
+
+    [ -n "$PROPERTIES" ] && break
+    sleep 2
+done
+
+# Do not mark complete if the desktop isn't initialized.
+[ -n "$PROPERTIES" ] || exit 0
+
+SUCCESS=0
+
+while IFS= read -r property; do
+    [ -n "$property" ] || continue
+
+    if xfconf-query -c xfce4-desktop \
+        -p "$property" -s "$WALL"; then
+
+        SUCCESS=1
+
+        style="${property%/last-image}/image-style"
+
+        xfconf-query -c xfce4-desktop \
+            -p "$style" --create -t int -s 5 \
+            >/dev/null 2>&1 || \
+        xfconf-query -c xfce4-desktop \
+            -p "$style" -s 5 >/dev/null 2>&1 || true
+    fi
+done <<EOF
+$PROPERTIES
+EOF
+
+[ "$SUCCESS" -eq 1 ] || exit 0
+
+# Use an installed light GTK theme.
+if [ -d /usr/share/themes/Adwaita ]; then
+    xfconf-query -c xsettings \
+        -p /Net/ThemeName \
+        --create -t string -s Adwaita \
+        >/dev/null 2>&1 || \
+    xfconf-query -c xsettings \
+        -p /Net/ThemeName -s Adwaita \
+        >/dev/null 2>&1 || true
+fi
+
+mkdir -p "$HOME/.config/lifeos"
+touch "$MARKER"
+
+echo "LIFE Lite first-login configuration complete"

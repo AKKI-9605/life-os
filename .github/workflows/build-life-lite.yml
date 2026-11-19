@@ -26,7 +26,7 @@ jobs:
               pacman -Syu --noconfirm
               pacman -S --noconfirm archiso python
 
-              python scripts/prepare_iso.py \
+              python scripts/prepare_iso_m45.py \
                 life-lite \
                 --output /tmp/life-lite-profile
 

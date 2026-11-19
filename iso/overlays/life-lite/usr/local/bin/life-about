@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+printf '\nLIFE OS — Lite Edition\n'
+printf 'Desktop: XFCE\n'
+printf 'Development milestone: 35\n'
+printf 'Base system: '
+if [ -r /etc/os-release ]; then
+    . /etc/os-release
+    printf '%s\n' "${PRETTY_NAME:-Linux}"
+else
+    printf 'Linux\n'
+fi
+printf '\n'

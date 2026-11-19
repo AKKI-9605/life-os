@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=LIFE Lite First Login
+Comment=Initialize LIFE Lite appearance
+Exec=/usr/local/bin/life-lite-first-login
+TryExec=/usr/local/bin/life-lite-first-login
+OnlyShowIn=XFCE;
+Terminal=false
+StartupNotify=false

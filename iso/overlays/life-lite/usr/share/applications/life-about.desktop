@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=About LIFE Lite
+Comment=View LIFE Lite information
+Exec=xfce4-terminal --hold -e /usr/local/bin/life-about
+Icon=computer
+Terminal=false
+Categories=System;Utility;

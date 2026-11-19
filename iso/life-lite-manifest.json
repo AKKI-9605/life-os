@@ -1,0 +1,16 @@
+{
+  "name": "LIFE OS",
+  "edition": "Lite",
+  "milestone": 35,
+  "architecture": "x86_64",
+  "target_base": "Arch Linux",
+  "development_base": "Debian 12",
+  "desktop": "XFCE",
+  "status": "distribution overlay prototype",
+  "first_login": "/usr/local/bin/life-lite-first-login",
+  "wallpapers": [
+    "/usr/share/backgrounds/lifeos/life-horizon.svg",
+    "/usr/share/backgrounds/lifeos/life-morning.svg",
+    "/usr/share/backgrounds/lifeos/life-midnight.svg"
+  ]
+}

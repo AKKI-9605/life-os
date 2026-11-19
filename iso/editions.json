@@ -15,7 +15,12 @@
       "pipewire-pulse",
       "wireplumber",
       "pavucontrol",
-      "python"
+      "python",
+      "xorg-server",
+      "xorg-xauth",
+      "xf86-input-libinput",
+      "mesa",
+      "xfce4-session"
     ]
   },
   "life-standard": {

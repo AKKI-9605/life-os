@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Temporary user for the LIFE Lite live ISO.
+# This is NOT a permanent installed-system account.
+
+if ! getent group autologin >/dev/null; then
+    groupadd --system autologin
+fi
+
+if ! id life >/dev/null 2>&1; then
+    useradd         --create-home         --shell /bin/bash         --groups autologin         life
+else
+    usermod -aG autologin life
+fi
+
+# Ensure the live desktop has its own user home.
+install -d -o life -g life /home/life
+
+echo "LIFE Lite live user ready"
