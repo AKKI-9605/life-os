@@ -47,7 +47,7 @@ jobs:
           sudo apt-get install -y -qq \
             qemu-system-x86 socat imagemagick
 
-          mkdir -p out/boot-test
+          mkdir -p ${{ runner.temp }}/life-boot-test
 
           ISO=$(find out/iso -maxdepth 1 -name '*.iso' -print -quit)
 
@@ -67,9 +67,9 @@ jobs:
             -vga std \
             -display none \
             -monitor unix:/tmp/life-qemu-monitor.sock,server,nowait \
-            -serial file:out/boot-test/serial.log \
+            -serial file:${{ runner.temp }}/life-boot-test/serial.log \
             -no-reboot \
-            >out/boot-test/qemu-host.log 2>&1 &
+            >${{ runner.temp }}/life-boot-test/qemu-host.log 2>&1 &
 
           QEMU_PID=$!
 
@@ -92,7 +92,7 @@ jobs:
               break
             fi
 
-            IMAGE="out/boot-test/boot-${SECOND}.ppm"
+            IMAGE="${{ runner.temp }}/life-boot-test/boot-${SECOND}.ppm"
 
             printf "screendump %s\\n" "$IMAGE" |
               socat - UNIX-CONNECT:/tmp/life-qemu-monitor.sock ||
@@ -105,10 +105,10 @@ jobs:
           done
 
           echo "===== QEMU LOG ====="
-          tail -30 out/boot-test/qemu-host.log || true
+          tail -30 ${{ runner.temp }}/life-boot-test/qemu-host.log || true
 
           echo "===== BOOT EVIDENCE ====="
-          ls -lh out/boot-test/
+          ls -lh ${{ runner.temp }}/life-boot-test/
 
           echo "Boot evidence captured; graphical login not automatically verified."
 
@@ -117,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: life-lite-boot-test
-          path: out/boot-test/
+          path: ${{ runner.temp }}/life-boot-test/
           if-no-files-found: warn
           retention-days: 3
 
