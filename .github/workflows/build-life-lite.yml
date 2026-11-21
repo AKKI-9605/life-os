@@ -38,6 +38,89 @@ jobs:
                 /tmp/life-lite-profile
             '
 
+      - name: Boot LIFE Lite in QEMU and capture evidence
+        timeout-minutes: 12
+        run: |
+          set -euo pipefail
+
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            qemu-system-x86 socat imagemagick
+
+          mkdir -p out/boot-test
+
+          ISO=$(find out/iso -maxdepth 1 -name '*.iso' -print -quit)
+
+          if [ -z "$ISO" ]; then
+            echo "No ISO found"
+            exit 1
+          fi
+
+          echo "Testing ISO: $ISO"
+
+          qemu-system-x86_64 \
+            -machine pc,accel=tcg \
+            -m 2048 \
+            -smp 2 \
+            -boot d \
+            -cdrom "$ISO" \
+            -vga std \
+            -display none \
+            -monitor unix:/tmp/life-qemu-monitor.sock,server,nowait \
+            -serial file:out/boot-test/serial.log \
+            -no-reboot \
+            >out/boot-test/qemu-host.log 2>&1 &
+
+          QEMU_PID=$!
+
+          cleanup() {
+            kill "$QEMU_PID" 2>/dev/null || true
+            wait "$QEMU_PID" 2>/dev/null || true
+          }
+
+          trap cleanup EXIT
+
+          for SECOND in 45 135; do
+            if [ "$SECOND" -eq 45 ]; then
+              sleep 45
+            else
+              sleep 90
+            fi
+
+            if ! kill -0 "$QEMU_PID" 2>/dev/null; then
+              echo "QEMU exited before screenshot"
+              break
+            fi
+
+            IMAGE="out/boot-test/boot-${SECOND}.ppm"
+
+            printf "screendump %s\\n" "$IMAGE" |
+              socat - UNIX-CONNECT:/tmp/life-qemu-monitor.sock ||
+              true
+
+            if [ -s "$IMAGE" ]; then
+              convert "$IMAGE" "${IMAGE%.ppm}.png" || true
+              echo "Captured screenshot at ${SECOND}s"
+            fi
+          done
+
+          echo "===== QEMU LOG ====="
+          tail -30 out/boot-test/qemu-host.log || true
+
+          echo "===== BOOT EVIDENCE ====="
+          ls -lh out/boot-test/
+
+          echo "Boot evidence captured; graphical login not automatically verified."
+
+      - name: Upload LIFE Lite boot test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: life-lite-boot-test
+          path: out/boot-test/
+          if-no-files-found: warn
+          retention-days: 3
+
       - name: Upload ISO
         uses: actions/upload-artifact@v4
         with:
